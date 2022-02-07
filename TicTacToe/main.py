@@ -78,6 +78,13 @@ def has_won(board, sign):
     return left_diagonal_win or right_diagonal_win
 
 
+def is_draw(board):
+    for row in board:
+        if not all([x is not None for x in row]):
+            return False
+    return True
+
+
 first_player, second_player = read_players()
 
 print_board_numeration()
@@ -113,6 +120,10 @@ while True:
 
     if has_won(board, current_player.sign):
         print(f'{current_player.name} won!')
+        break
+
+    if is_draw(board):
+        print('draw!')
         break
 
     turn += 1
