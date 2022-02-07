@@ -40,6 +40,13 @@ def is_valid_position(board, board_mapper, position):
     return board[row][col] is None
 
 
+def print_board(board):
+    for row in board:
+        print('|  ', end='')
+        print('  |  '.join([x if x is not None else ' ' for x in row]), end='')
+        print('  |')
+
+
 first_player, second_player = read_players()
 
 print_board_numeration()
@@ -67,5 +74,10 @@ while True:
 
     if not is_valid_position(board, board_mapper, position):
         continue
+
+    row, col = board_mapper[position]
+    board[row][col] = current_player.sign
+
+    print_board(board)
 
     turn += 1
