@@ -25,8 +25,47 @@ def print_board_numeration():
     print('|  7  |  8  |  9  |')
 
 
+def init_board():
+    size = 3
+    result = []
+    for _ in range(size):
+        result.append([None] * size)
+    return result
+
+
+def is_valid_position(board, board_mapper, position):
+    if position < 1 or position > 9:
+        return False
+    row, col = board_mapper[position]
+    return board[row][col] is None
+
+
 first_player, second_player = read_players()
 
 print_board_numeration()
 
 print(f'{first_player.name} starts first!')
+
+board = init_board()
+board_mapper = {
+    1: [0, 0],
+    2: [0, 1],
+    3: [0, 2],
+    4: [1, 0],
+    5: [1, 1],
+    6: [1, 2],
+    7: [2, 0],
+    8: [2, 1],
+    9: [2, 2],
+}
+
+turn = 1
+
+while True:
+    current_player = first_player if turn % 2 != 0 else second_player
+    position = int(input(f'{current_player.name} choose a free position [1-9]: '))
+
+    if not is_valid_position(board, board_mapper, position):
+        continue
+
+    turn += 1
