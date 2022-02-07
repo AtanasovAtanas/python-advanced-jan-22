@@ -4,9 +4,19 @@ class Player:
         self.sign = sign
 
 
+def read_player_name(helper_text):
+    while True:
+        player_name = input(helper_text).strip()
+        if player_name:
+            return player_name
+
+
 def read_players():
-    first_player_name = input(f'Player one name: ')
-    second_player_name = input(f'Player two name: ')
+    first_player_name = read_player_name('Player one name: ')
+    while True:
+        second_player_name = read_player_name(f'Player two name: ')
+        if second_player_name != first_player_name:
+            break
 
     while True:
         first_player_sign = input(f'{first_player_name} would you like to play with "X" or "O"? ').upper()
