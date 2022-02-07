@@ -47,6 +47,37 @@ def print_board(board):
         print('  |')
 
 
+def has_won(board, sign):
+    # rows
+    for row in board:
+        # ['X', None, 'O']
+        # [True, False, False]
+        # ['X', 'X', 'X']
+        # [True, True, True]
+        if all([x == sign for x in row]):
+            return True
+
+    # cols
+    for col in range(len(board)):
+        col_win = True
+        for row in range(len(board)):
+            if board[row][col] != sign:
+                col_win = False
+                break
+        if col_win:
+            return True
+
+    # diagonals
+    left_diagonal_win = True
+    right_diagonal_win = True
+    for idx in range(len(board)):
+        if board[idx][idx] != sign:
+            left_diagonal_win = False
+        if board[idx][len(board) - 1 - idx] != sign:
+            right_diagonal_win = False
+    return left_diagonal_win or right_diagonal_win
+
+
 first_player, second_player = read_players()
 
 print_board_numeration()
@@ -79,5 +110,9 @@ while True:
     board[row][col] = current_player.sign
 
     print_board(board)
+
+    if has_won(board, current_player.sign):
+        print(f'{current_player.name} won!')
+        break
 
     turn += 1
