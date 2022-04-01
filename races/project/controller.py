@@ -38,10 +38,37 @@ class Controller:
         return f'Race {race.name} is created.'
 
     def add_car_to_driver(self, driver_name: str, car_type: str):
-        pass
+        driver = self.__find_driver_by_name(driver_name)
+        car = self.__find_last_free_car_by_type(car_type)
+
+        return driver.change_car(car)
 
     def add_driver_to_race(self, race_name: str, driver_name: str):
-        pass
+        race = self.__find_race_by_name(race_name)
+        driver = self.__find_driver_by_name(driver_name)
+
+        return race.register_driver(driver)
 
     def start_race(self, race_name: str):
-        pass
+        race = self.__find_race_by_name(race_name)
+        return race.start()
+
+    def __find_driver_by_name(self, driver_name):
+        for driver in self.drivers:
+            if driver.name == driver_name:
+                return driver
+        raise Exception(f'Driver {driver_name} could not be found!')
+
+    def __find_last_free_car_by_type(self, car_type):
+        for idx in range(len(self.cars) - 1, -1, -1):
+            car = self.cars[idx]
+
+            if not car.is_taken and car.__class__.__name__ == car_type:
+                return car
+        raise Exception(f'Car {car_type} could not be found!')
+
+    def __find_race_by_name(self, race_name):
+        for race in self.races:
+            if race.name == race_name:
+                return race
+        raise Exception(f'Race {race_name} could not be found!')
