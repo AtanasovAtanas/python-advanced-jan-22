@@ -38,7 +38,7 @@ class BaseAquarium(ABC):
         if self.fish_type != fish.__class__.__name__:
             return 'Water not suitable.'
         self.fish.append(fish)
-        return f'Successfully added {self.__class__.__name__} to {self.name}.'
+        return f'Successfully added {fish.__class__.__name__} to {self.name}.'
 
     def remove_fish(self, fish: BaseFish):
         self.fish.remove(fish)
